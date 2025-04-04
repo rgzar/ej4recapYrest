@@ -25,22 +25,22 @@ public class ConductorController {
     }
 
     @GetMapping("/conductor/{id}")
-    public ResponseEntity<Conductor> getById(@PathVariable Long id) {
+    public ResponseEntity<String> getById(@PathVariable Long id) {
         return conductorService.getById(id)
-                .map(conductor -> new ResponseEntity<>(conductor, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(conductor -> new ResponseEntity<>("Conductor encontrado", HttpStatus.OK))
+                .orElse(new ResponseEntity<>("Conductor no encontrado", HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/conductor")
-    public ResponseEntity<Conductor> create(@RequestBody Conductor conductor) {
-        Conductor nuevoConductor = conductorService.save(conductor);
-        return new ResponseEntity<>(nuevoConductor, HttpStatus.CREATED);
+    public ResponseEntity<String> create(@RequestBody Conductor conductor) {
+        conductorService.save(conductor);
+        return new ResponseEntity<>("Conductor creado con éxito", HttpStatus.CREATED);
     }
 
     @PutMapping("/conductor/{id}")
-    public ResponseEntity<Conductor> update(@PathVariable Long id, @RequestBody Conductor conductor) {
-        Conductor updatedConductor = conductorService.update(id, conductor);
-        return new ResponseEntity<>(updatedConductor, HttpStatus.OK);
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Conductor conductor) {
+        conductorService.update(id, conductor);
+        return new ResponseEntity<>("Conductor actualizado con éxito", HttpStatus.OK);
     }
 
     @DeleteMapping("/conductor/{id}")
